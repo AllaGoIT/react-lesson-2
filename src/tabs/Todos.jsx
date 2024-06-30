@@ -1,14 +1,26 @@
-import { Form, Text } from 'components';
+import { Form, Text, TodoList } from 'components';
 import { useState } from 'react';
 
 export const Todos = () => {
-
   const [todos, setTodos] = useState([]);
-  const addTodo = (newTodo) => {
+  const addTodo = newTodo => {
     setTodos([...todos, newTodo]);
-   };
-  return <>
-    <Form onSubmit={addTodo} />
-    <Text textAlign="center">There are no any todos ...</Text>
-  </>;
+  };
+  const deleteTodo = id => {
+    const upDatedTodos = todos.filter(item => {
+      return item.id !== id;
+    });
+    setTodos(upDatedTodos);
+  };
+
+  return (
+    <>
+      <Form onSubmit={addTodo} />
+      {todos.length ? (
+        <TodoList deleteTodo={deleteTodo} items={todos} />
+      ) : (
+        <Text textAlign="center">There are no any todos ...</Text>
+      )}
+    </>
+  );
 };
